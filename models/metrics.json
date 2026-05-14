@@ -1,0 +1,25 @@
+{
+  "model_name": "RandomForestRegressor",
+  "training_rows": 191935,
+  "test_rows": 47984,
+  "random_state": 42,
+  "test_size": 0.2,
+  "log_transform": true,
+  "MAE": 7.834465881338261,
+  "MSE": 1276.0739052491915,
+  "RMSE": 35.722176658893446,
+  "R2": 0.20541335919282422,
+  "MAPE": 37.78120236899329,
+  "baseline_MAE": 17.478971814735914,
+  "improvement_pct": 55.1777646627172,
+  "best_params": {
+    "model__n_estimators": 200,
+    "model__max_depth": 20,
+    "model__max_features": "sqrt",
+    "model__min_samples_split": 5,
+    "model__min_samples_leaf": 3,
+    "model__bootstrap": true,
+    "model__random_state": 42,
+    "model__n_jobs": 1
+  }
+}
