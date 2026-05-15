@@ -49,7 +49,7 @@ Predict how long a delivery trip will take (in minutes) given route geometry, ro
 > **Why R² is low (expected behaviour):** The dataset contains ~3–7% invalid or missing foreign key references across the trips → roads, traffic, and weather joins, Gaussian noise injected on `travel_time_min`, and ~13.5% of trips with no valid road reference. These factors set a hard noise floor on achievable variance explanation. MAE (7.83 min) is the correct primary metric.
 
 ---
-
+```text
 DeliverIQ/
 ├── notebooks/
 │   ├── 01_data_cleaning.ipynb
@@ -57,26 +57,49 @@ DeliverIQ/
 │   ├── 03_feature_engineering.ipynb
 │   ├── 04_model_training.ipynb
 │   └── 05_evaluation_summary.ipynb
+│
 ├── src/
-│   ├── init.py
+│   ├── __init__.py
 │   ├── features.py
 │   ├── train.py
 │   └── predict.py
+│
 ├── data/
-│   ├── raw/                          # roads.csv, traffic.csv, weather.csv, trips.csv
-│   ├── processed/
-│   │   ├── cleaned/                  # roads_clean.csv, traffic_clean.csv, etc.
-│   │   ├── splits/                   # X_train.csv, X_test.csv, y_train.csv, y_test.csv
-│   │   └── merged/
-│   │       └── master.csv            # 239,919 × 19 — modelling-ready flat table
+│   ├── raw/
+│   │   ├── roads.csv
+│   │   ├── traffic.csv
+│   │   ├── weather.csv
+│   │   └── trips.csv
+│   │
+│   └── processed/
+│       ├── cleaned/
+│       │   ├── roads_clean.csv
+│       │   ├── traffic_clean.csv
+│       │   ├── weather_clean.csv
+│       │   └── trips_clean.csv
+│       │
+│       ├── splits/
+│       │   ├── X_train.csv
+│       │   ├── X_test.csv
+│       │   ├── y_train.csv
+│       │   └── y_test.csv
+│       │
+│       └── merged/
+│           └── master.csv
+│           # 239,919 × 19 — modelling-ready flat table
+│
 ├── models/
-│   ├── best_model.pkl                # Fitted sklearn Pipeline
-│   ├── metrics.json                  # Full evaluation metrics
-│   └── feature_importance.csv        # Feature importances (sorted descending)
+│   ├── best_model.pkl
+│   ├── metrics.json
+│   └── feature_importance.csv
+│
 ├── output/
-│   └── plots/                        # 10 EDA plots (PNG, DPI 120)
-├── app.py                            # Streamlit prediction interface
+│   └── plots/
+│       └── # 10 EDA plots (PNG, DPI 120)
+│
+├── app.py
 └── requirements.txt
+```
 
 ---
 
@@ -227,12 +250,14 @@ Four CSV files sourced from a multi-table urban transportation system. Each cont
 All preprocessing happens inside the sklearn `Pipeline` to prevent data leakage. Encoding and scaling are refitted on each CV fold's training slice.
 
 Pipeline
+```
 └── preprocessor (ColumnTransformer, remainder='drop')
 ├── num   → StandardScaler       → 8 numeric features
 ├── bool  → passthrough          → is_rush_hour, is_weekend
 ├── ord   → OrdinalEncoder       → traffic_level
 └── cat   → OneHotEncoder        → road_type, weather_type
 └── model → estimator (swapped per stage)
+```
 
 ### Model Progression
 
